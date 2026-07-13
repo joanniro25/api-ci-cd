@@ -4,20 +4,20 @@ on:
   push:
     branches:
       - main
-      - master
 
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar el código
+      - name: Descargar código
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Instalar Node.js
         uses: actions/setup-node@v4
@@ -30,8 +30,10 @@ jobs:
       - name: Ejecutar ESLint
         run: npm run lint
 
-      - name: Ejecutar pruebas
-        run: npm test
-
-      - name: Generar cobertura
+      - name: Ejecutar pruebas con cobertura
         run: npm run coverage
+
+      - name: Analizar con SonarQube Cloud
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
