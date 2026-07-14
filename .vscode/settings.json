@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "joanniro25",
+        "projectKey": "joanniro25_api-ci-cd"
+    }
+}
